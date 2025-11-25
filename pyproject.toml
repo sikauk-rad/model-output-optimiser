@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "model_output_optimiser"
+version = "0.0.1"
+authors = [
+  {name = "Milan Kundra", email = "kundra.milan@uk.sika.com"},
+]
+dependencies = [
+  "numpy>=2.3.0",
+  "scipy>=1.9.0",
+  "scikit-learn>=0.22",
+  "tqdm",
+  "app_utilities @ git+https://github.com/sikauk-rad/app-utilities.git"
+]
+description = "Package containing utility functions for apps."
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[tool.hatch.metadata]
+allow-direct-references=true
+
+# [project.urls]
+# Homepage = "https://github.com/SikaSIS/hybrid-rag"
+# Issues = "https://github.com/SikaSIS/hybrid-rag/issues"
+
