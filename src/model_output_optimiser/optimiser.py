@@ -464,6 +464,7 @@ class ConstrainedEstimatorOptimiser[T: int, U: int]:
         maximisation objectives.
         """
 
+        self.history.append(variable_values)
         array_to_predict = self._prepare_prediction_array(
             variable_values = variable_values,
         )
@@ -530,7 +531,7 @@ class ConstrainedEstimatorOptimiser[T: int, U: int]:
             Y = array_to_predict_scaled,
             metric = self._distance_metric,
         )
-        return distances.min(axis = 0) / self.n_features
+        return (distances.min(axis = 0) / self.n_features)[None]
 
 
     def _generate_linear_constraint(
@@ -758,6 +759,11 @@ class ConstrainedEstimatorOptimiser[T: int, U: int]:
         self.variable_bounds = variable_bounds
         self.variable_prices = variable_prices
         self.minimise_output = minimise_output
+        self.price_constraint = price_constraint
+        self.sum_constraints = sum_constraints
+        self.nonzero_constraints = nonzero_constraints
+        self.max_distance_constraint = max_distance_constraint
+
 
         self._verify_and_register_feature_names(
             model = self.model,
@@ -890,6 +896,7 @@ class ConstrainedEstimatorOptimiser[T: int, U: int]:
         >>> result = optimiser.perform_optimisation(iterations=500, display=True)
         """
 
+        self.history = []
         results = []
         for n, bounds_combination in tqdm(
             enumerate(self._bounds_combinations),
